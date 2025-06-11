@@ -3,6 +3,7 @@ import io
 import os
 import shutil
 import zipfile
+import textwrap
 from itertools import chain
 from pathlib import Path
 from typing import Any
@@ -99,7 +100,9 @@ async def copy(source: Path, destination: Path) -> None:
 
 async def main() -> None:
     runtimes: List[str] = [b["runtime"] for b in database["bundles"]]
-    bundles: List[Tuple[str, str]] = [(f"{b['organization']}/{b['repository']}", b["release"]) for b in database["bundles"]]
+    bundles: List[Tuple[str, str]] = [
+        (f"{b['organization']}/{b['repository']}", b["release"]) for b in database["bundles"]
+    ]
 
     semaphore: asyncio.Semaphore = asyncio.Semaphore(4)
     async with httpx.AsyncClient(follow_redirects=True) as client:
@@ -124,6 +127,17 @@ async def main() -> None:
         await render("play.html", Path("output") / "play" / b["slug"], context)
 
     await copy(Path("media"), Path("output") / "media")
+
+    async with aiofiles.open("output/_headers", "w") as f:
+        await f.write(
+            textwrap.dedent("""\
+            /
+              Cache-Control: no-cache, no-store, must-revalidate
+
+            /*
+              Cache-Control: public, max-age=86400, immutable
+        """)
+        )
 
 
 if __name__ == "__main__":
