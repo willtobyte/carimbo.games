@@ -5,20 +5,6 @@
   href="/runtimes/{{ runtime }}/carimbo.js"
   as="script"
 />
-<link
-  rel="preload"
-  href="/runtimes/{{ runtime }}/carimbo.wasm"
-  as="fetch"
-  type="application/wasm"
-  crossorigin
-/>
-<link
-  rel="preload"
-  href="/bundles/{{ organization }}/{{ repository}}/{{ release }}/bundle.7z"
-  as="fetch"
-  type="application/octet-stream"
-  crossorigin
-/>
 <style>
   *, *::before, *::after {
     box-sizing: border-box;
