@@ -63,7 +63,7 @@ bundles:
   - name: MegaRick
     slug: megarick
     cover: /media/megarick/cover.png
-    runtime: "1.5.63"
+    runtime: "1.5.65"
     organization: willtobyte
     repository: megarick
     release: "1.0.44"
