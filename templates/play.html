@@ -123,6 +123,6 @@
   const script = document.createElement("script");
   script.src = "/runtimes/{{ runtime }}/carimbo.js";
   script.defer = true;
-  document.body.appendChild(script);
+  document.head.appendChild(script);
 </script>
 {% endblock %}
