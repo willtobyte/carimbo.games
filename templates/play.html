@@ -96,7 +96,7 @@
 </main>
 <script type="module">
   const canvas = document.getElementById("canvas");
-  const response = await fetch("/bundles/{{ organization }}/{{ repository}}/{{ release }}/bundle.7z");
+  const response = await fetch("/bundles/{{ organization }}/{{ repository}}/{{ release }}/{{ archive }}");
   const bundle = await response.arrayBuffer();
   const loading = document.getElementById("loading");
 
