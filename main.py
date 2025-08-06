@@ -2,8 +2,8 @@ import asyncio
 import io
 import os
 import shutil
-import zipfile
 import textwrap
+import zipfile
 from itertools import chain
 from pathlib import Path
 from typing import Any
@@ -58,15 +58,14 @@ async def download_runtime(
 async def download_bundle(
     repository: str,
     release: str,
+    archive: str,
     client: httpx.AsyncClient,
     semaphore: asyncio.Semaphore,
 ) -> None:
-    url: str = f"https://github.com/{repository}/releases/download/v{release}/bundle.7z"
+    url: str = f"https://github.com/{repository}/releases/download/v{release}/{archive}"
 
     output: Path = Path("output/bundles") / repository / release
     output.mkdir(parents=True, exist_ok=True)
-    bundle: Path = output / "bundle.7z"
-
     async with semaphore:
         async with client.stream(
             "GET",
@@ -74,7 +73,7 @@ async def download_bundle(
             headers={"Authorization": f"token {os.environ['GITHUB_TOKEN']}"},
         ) as r:
             r.raise_for_status()
-            async with aiofiles.open(bundle, "wb") as f:
+            async with aiofiles.open(output / archive, "wb") as f:
                 async for chunk in r.aiter_bytes():
                     await f.write(chunk)
 
@@ -100,15 +99,18 @@ async def copy(source: Path, destination: Path) -> None:
 
 async def main() -> None:
     runtimes: List[str] = [b["runtime"] for b in database["bundles"]]
-    bundles: List[Tuple[str, str]] = [
-        (f"{b['organization']}/{b['repository']}", b["release"]) for b in database["bundles"]
+    bundles: List[Tuple[str, str, str]] = [
+        (f"{b['organization']}/{b['repository']}", b["release"], b["archive"]) for b in database["bundles"]
     ]
 
     semaphore: asyncio.Semaphore = asyncio.Semaphore(4)
     async with httpx.AsyncClient(follow_redirects=True) as client:
         coros = chain(
             (download_runtime(runtime, client, semaphore) for runtime in runtimes),
-            (download_bundle(repo, rel, client, semaphore) for repo, rel in bundles),
+            (
+                download_bundle(repository, release, archive, client, semaphore)
+                for repository, release, archive in bundles
+            ),
         )
 
         await asyncio.gather(*[asyncio.create_task(coro) for coro in coros])

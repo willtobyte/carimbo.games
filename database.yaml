@@ -6,6 +6,7 @@ bundles:
     organization: willtobyte
     repository: MOS6502
     release: "1.0.7"
+    archive: bundle.7z
     resolution: 720p
     about: |
       # **MOS6502**
@@ -26,6 +27,7 @@ bundles:
     organization: willtobyte
     repository: slime
     release: "1.0.12"
+    archive: bundle.7z
     resolution: 720p
     about: |
       # **Slime**
@@ -61,10 +63,11 @@ bundles:
   - name: MegaRick
     slug: megarick
     cover: /media/megarick/cover.png
-    runtime: "1.0.70"
+    runtime: "1.5.63"
     organization: willtobyte
     repository: megarick
-    release: "1.0.41"
+    release: "1.0.43"
+    archive: cartridge.zip
     resolution: 720p
     about: |
       # **MegaRick**
@@ -101,6 +104,7 @@ bundles:
     organization: willtobyte
     repository: henrique
     release: "0.0.28"
+    archive: bundle.7z
     resolution: 720p
     about: |
       # **Henrique, the little apple critter, that little red one, you know?**
@@ -137,6 +141,7 @@ bundles:
     organization: willtobyte
     repository: tinycraft
     release: "1.0.0"
+    archive: bundle.7z
     resolution: 720p
     about: |
       # **Tinycraft**
