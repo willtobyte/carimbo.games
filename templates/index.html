@@ -1,5 +1,4 @@
-{% extends "base.html" %}
-{% block head %}
+{% extends "base.html" %} {% block head %}
 <style>
   html,
   body {
@@ -52,8 +51,7 @@
     margin-bottom: 16px;
   }
 </style>
-{% endblock %}
-{% block content %}
+{% endblock %} {% block content %}
 <main>
   <ul>
     {% for bundle in bundles %}
@@ -73,6 +71,9 @@
   </ul>
 </main>
 <footer>
-  <a href="https://github.com/willtobyte">Copyleft by <strong>Will To Byte</strong> – check out our GitHub repository.</a>
+  <a href="https://github.com/willtobyte"
+    >Copyleft by <strong>Will To Byte</strong> – check out our GitHub
+    repository.</a
+  >
 </footer>
 {% endblock %}
