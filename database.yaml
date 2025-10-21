@@ -66,7 +66,7 @@ bundles:
     runtime: "2.0.36"
     organization: willtobyte
     repository: megarick
-    release: "1.0.48"
+    release: "1.0.49"
     archive: cartridge.zip
     resolution: 720p
     about: |
