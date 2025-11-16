@@ -23,11 +23,11 @@ bundles:
   - name: Slime
     slug: slime
     cover: /media/slime/cover.avif
-    runtime: "1.0.45"
+    runtime: "3.0.145"
     organization: willtobyte
     repository: slime
-    release: "1.0.12"
-    archive: bundle.7z
+    release: "1.0.13"
+    archive: cartridge.rom
     resolution: 720p
     about: |
       # **Slime**
@@ -63,10 +63,10 @@ bundles:
   - name: MegaRick
     slug: megarick
     cover: /media/megarick/cover.png
-    runtime: "3.0.120"
+    runtime: "3.0.145"
     organization: willtobyte
     repository: megarick
-    release: "1.0.51"
+    release: "1.0.52"
     archive: cartridge.rom
     resolution: 720p
     about: |
