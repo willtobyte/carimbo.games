@@ -66,7 +66,7 @@ bundles:
     runtime: "4.0.19"
     organization: willtobyte
     repository: megarick
-    release: "1.0.53"
+    release: "1.0.54"
     archive: cartridge.rom
     resolution: 720p
     about: |
