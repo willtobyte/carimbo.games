@@ -63,10 +63,10 @@ bundles:
   - name: MegaRick
     slug: megarick
     cover: /media/megarick/cover.png
-    runtime: "3.0.145"
+    runtime: "4.0.19"
     organization: willtobyte
     repository: megarick
-    release: "1.0.52"
+    release: "1.0.53"
     archive: cartridge.rom
     resolution: 720p
     about: |
