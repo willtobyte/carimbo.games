@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Play Slime - Carimbo Game" />
+    <meta name="keywords" content="Game Engine, WebAssembly, C++, SDL, Lua, Carimbo" />
+    <meta name="author" content="Rodrigo Delduca" />
+    <title>Slime - Carimbo</title>
+    <link rel="preload" href="./carimbo.js" as="script" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      body { margin: 0; font-family: "Segoe UI", Ubuntu, "Helvetica Neue", sans-serif; }
+      main { display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+      .container { width: 1280px; max-width: 100vw; aspect-ratio: 16 / 9; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+      #canvas { width: 100%; height: 100%; display: block; opacity: 0; animation: fade 1s ease forwards; }
+      #loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; background: rgba(255, 255, 255, 0.8); padding: 8px 12px; border-radius: 4px; }
+      @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+      .about { font-size: 14px; line-height: 1.4; text-align: left; width: 100%; max-width: 1080px; margin-top: 16px; }
+      @media only screen and (max-width: 414px) { .about { padding: 16px; } }
+      @media only screen and (min-width: 1024px) { .about { width: 1280px; margin: 8px 0 16px calc((100vw - 1280px) / 2); text-align: left; align-self: flex-start; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="container">
+        <canvas id="canvas"></canvas>
+        <div id="loading" style="display: none">This is taking a little longer than expected</div>
+      </div>
+      <div class="about">
+        <h1><strong>Slime</strong></h1>
+        <p>An apocalyptic hand trying to shape the ideas of a slime.</p>
+        <h2>How to Play</h2>
+        <p>You'll need <strong>two controllers</strong>: One controls the slime and the other the hand.</p>
+        <p>Use directional buttons to move and attack.</p>
+        <h3>Gameplay Mechanics</h3>
+        <ul>
+          <li>Each player tries to <strong>deceive</strong> the other and then <strong>attack</strong>.</li>
+          <li>The first to <strong>successfully attack</strong> earns a point.</li>
+        </ul>
+        <h2>Who</h2>
+        <ul>
+          <li><strong>Pixel Art</strong>: <a href="https://alysonkof.com.br">Alyson Monteiro</a></li>
+          <li><strong>Programming</strong>: <a href="https://rodrigodelduca.org">Rodrigo Delduca</a></li>
+        </ul>
+        <p>Powered by <a href="https://github.com/willtobyte/carimbo">Carimbo</a>.</p>
+        <h2>Platforms</h2>
+        <p>This game is designed for <strong>desktop web browsers only</strong>.</p>
+        <p>Check out the <strong>source code</strong> on <a href="https://github.com/willtobyte/slime">GitHub</a>.</p>
+        <p><strong>Enjoy!</strong></p>
+      </div>
+    </main>
+    <script type="module">
+      const canvas = document.getElementById("canvas");
+      const response = await fetch("./cartridge.rom");
+      const bundle = await response.arrayBuffer();
+      const loading = document.getElementById("loading");
+      const timer = setTimeout(() => { loading.style.display = "block"; }, 500);
+      window.Module = {
+        canvas,
+        noInitialRun: true,
+        locateFile: (path) => { if (path.endsWith(".wasm")) { return "./" + path; } },
+        onRuntimeInitialized: () => { clearTimeout(timer); loading.style.display = "none"; FS.writeFile("cartridge.rom", new Uint8Array(bundle)); Module.callMain(); },
+      };
+      const script = document.createElement("script");
+      script.src = "./carimbo.js";
+      script.defer = true;
+      document.head.appendChild(script);
+    </script>
+  </body>
+</html>
