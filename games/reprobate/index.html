@@ -43,7 +43,7 @@
         canvas,
         noInitialRun: true,
         locateFile: (path) => { if (path.endsWith(".wasm")) { return "./" + path; } },
-        onRuntimeInitialized: () => { clearTimeout(timer); loading.style.display = "none"; FS.writeFile("bundle.7z", new Uint8Array(bundle)); Module.callMain(); },
+        onRuntimeInitialized: () => { clearTimeout(timer); loading.style.display = "none"; FS.writeFile("cartridge.rom", new Uint8Array(bundle)); Module.callMain(); },
       };
       const script = document.createElement("script");
       script.src = "./carimbo.js";
